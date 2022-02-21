@@ -2,6 +2,7 @@ const express = require('express');
 const cheerio = require('cheerio');
 const http = require('./http_module');
 const config = require('../config');
+const util = require('../util');
 let router = express.Router();
 
 /* GET home page. */
@@ -42,7 +43,7 @@ router.get('/ranking', function(req, res, next) {
         })
         let result = {};
         for(let i = 0; i < header_data.length; i++){
-            result[header_data[i]] = tableToJson(result_data[i]);
+            result[header_data[i]] = util.tableToJson(result_data[i]);
         }
         res.send(result);
     }).catch(function(err) {
@@ -76,7 +77,7 @@ router.get('/record_list', function(req, res, next) {
             result_tr.push(result_text);
         });
 
-        let result = tableToJson(result_tr);
+        let result = util.tableToJson(result_tr);
 
         res.send(result);
     }).catch(function(err) {
@@ -86,23 +87,3 @@ router.get('/record_list', function(req, res, next) {
 
 module.exports = router;
 
-tableToJson = function (table){
-    let json = [];
-    if(table.length > 1) {
-        for (let i = 1; i < table.length; i++) {
-            let object = {};
-            for (let j = 0; j < table[i].length; j++) {
-                object[table[0][j]] = table[i][j];
-            }
-            json.push(object);
-        }
-    }else{
-        let object = {};
-        for (let i = 0; i < table[0].length; i++) {
-            object[table[0][i]] = null;
-        }
-        json.push(object);
-    }
-
-    return json;
-}
