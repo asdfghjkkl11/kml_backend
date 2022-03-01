@@ -47,6 +47,7 @@ router.get('/ranking', function(req, res, next) {
         }
         res.send(result);
     }).catch(function(err) {
+        res.send({"error":err});
         // epic fail, handle error here
     });
 });
@@ -81,6 +82,54 @@ router.get('/record_list', function(req, res, next) {
 
         res.send(result);
     }).catch(function(err) {
+        res.send({"error":err});
+        // epic fail, handle error here
+    });
+});
+
+//param id
+router.get('/record_per', function(req, res, next) {
+    let url = config.url + '/record_per.php';
+    let query = req.url.split("?")[1];
+
+    http.postDataFromHttp(url,query).then(function(data) {
+        data = data.replaceAll('\n','').replaceAll('\t','');
+        let $ = cheerio.load(data);
+        let result_data = [];
+
+        let table = $("table[cellspacing='1']");
+
+        table.each(function (){
+            let result_tr = [];
+            let tr = $(this).find("tr");
+            tr.each(function (){
+                let result_text = [];
+                let div = $(this).find("td");
+                div.each(function (){
+                    let text = $(this).text();
+                    result_text.push(text);
+                });
+                result_tr.push(result_text);
+            });
+            result_data.push(result_tr);
+        });
+
+        let temp_data = [];
+        for(let i = 0; i < result_data[6].length; i++){
+            if(i%2 == 0){
+                temp_data.push(result_data[6][i]);
+            }
+        }
+        result_data[6]= temp_data;
+
+        let header_data = ['동장 성적','남장 성적','월간 성적','주간 성적','요일별 성적','시간대별 성적','전체 기록'];
+        let result = {};
+        for(let i = 0; i < header_data.length; i++){
+            result[header_data[i]] = util.tableToJson(result_data[i]);
+        }
+        res.send(result);
+    }).catch(function(err) {
+        res.send({"error":err});
         // epic fail, handle error here
     });
 });
