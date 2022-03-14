@@ -1,33 +1,33 @@
 const express = require('express');
 const cheerio = require('cheerio');
-const http = require('./http_module');
-const config = require('../config');
-const util = require('../util');
+const http = require('../js/http_module');
+const config = require('../js/config');
+const util = require('../js/util');
 let router = express.Router();
 
-/* GET home page. */
+/* GET */
 //param = year,month,quarter
 router.get('/ranking', function(req, res, next) {
     let url = config.url + '/ranking.php';
-    let query = req.url.split("?")[1];
+    let query = req.url.split('?')[1];
 
     if(query !== undefined){
-        url += "?"+query;
+        url += '?'+query;
     }
 
     http.getDataFromHttp(url).then(function(data) {
         data = data.replaceAll('\n','').replaceAll('\t','');
         let $ = cheerio.load(data);
         let result_data = [];
-        let table = $("table[width=100%]");
+        let table = $('table[width=100%]');
 
         table.each(function (){
             let result_tr = [];
-            let tr = $(this).find("tr");
+            let tr = $(this).find('tr');
 
             tr.each(function (){
                 let result_text = [];
-                let div = $(this).find("td div");
+                let div = $(this).find('td div');
 
                 div.each(function (){
                     let text = $(this).text();
@@ -42,7 +42,7 @@ router.get('/ranking', function(req, res, next) {
         });
 
         let header_data = [];
-        let header = $("tr[bgcolor='#353f6d'] td strong");
+        let header = $('tr[bgcolor="#353f6d"] td strong');
 
         header.each(function (){
             let text = $(this).text();
@@ -57,7 +57,7 @@ router.get('/ranking', function(req, res, next) {
 
         res.send(result);
     }).catch(function(err) {
-        res.send({"error":err});
+        res.send({'error':err.message});
         // epic fail, handle error here
     });
 });
@@ -65,23 +65,23 @@ router.get('/ranking', function(req, res, next) {
 //param = year,month
 router.get('/record_list', function(req, res, next) {
     let url = config.url + '/record_list.php';
-    let query = req.url.split("?")[1];
+    let query = req.url.split('?')[1];
 
     if(query !== undefined){
-        url += "?"+query;
+        url += '?'+query;
     }
 
     http.getDataFromHttp(url).then(function(data) {
         data = data.replaceAll('\n','').replaceAll('\t','');
 
         let $ = cheerio.load(data);
-        let table = $("table")[2];
-        let tr = $(table).find("tr.style7");
+        let table = $('table')[2];
+        let tr = $(table).find('tr.style7');
         let result_tr = [];
 
         tr.each(function (){
             let result_text = [];
-            let td = $(this).find("td");
+            let td = $(this).find('td');
 
             td.each(function (){
                 let text = $(this).text();
@@ -96,7 +96,7 @@ router.get('/record_list', function(req, res, next) {
 
         res.send(result);
     }).catch(function(err) {
-        res.send({"error":err});
+        res.send({'error':err.message});
         // epic fail, handle error here
     });
 });
@@ -104,22 +104,22 @@ router.get('/record_list', function(req, res, next) {
 //param id
 router.get('/record_per', function(req, res, next) {
     let url = config.url + '/record_per.php';
-    let query = req.url.split("?")[1];
+    let query = req.url.split('?')[1];
 
     http.postDataFromHttp(url,query).then(function(data) {
         data = data.replaceAll('\n','').replaceAll('\t','');
 
         let $ = cheerio.load(data);
         let result_data = [];
-        let table = $("table[cellspacing='1']");
+        let table = $('table[cellspacing="1"]');
 
         table.each(function (){
             let result_tr = [];
-            let tr = $(this).find("tr");
+            let tr = $(this).find('tr');
 
             tr.each(function (){
                 let result_text = [];
-                let div = $(this).find("td");
+                let div = $(this).find('td');
 
                 div.each(function (){
                     let text = $(this).text();
@@ -151,7 +151,7 @@ router.get('/record_per', function(req, res, next) {
 
         res.send(result);
     }).catch(function(err) {
-        res.send({"error":err});
+        res.send({'error':err.message});
         // epic fail, handle error here
     });
 });
@@ -159,22 +159,22 @@ router.get('/record_per', function(req, res, next) {
 //param id0 id1
 router.get('/record_versus_res', function(req, res, next) {
     let url = config.url + '/record_versus_res.php';
-    let query = req.url.split("?")[1];
+    let query = req.url.split('?')[1];
 
     http.postDataFromHttp(url,query).then(function(data) {
         data = data.replaceAll('\n','').replaceAll('\t','');
 
         let $ = cheerio.load(data);
         let result_data = [];
-        let table = $("table[cellspacing='1']");
+        let table = $('table[cellspacing="1"]');
 
         table.each(function (){
             let result_tr = [];
-            let tr = $(this).find("tr");
+            let tr = $(this).find('tr');
 
             tr.each(function (){
                 let result_text = [];
-                let div = $(this).find("td");
+                let div = $(this).find('td');
 
                 div.each(function (){
                     let text = $(this).text();
@@ -207,7 +207,7 @@ router.get('/record_versus_res', function(req, res, next) {
 
         res.send(result);
     }).catch(function(err) {
-        res.send({"error":err});
+        res.send({'error':err.message});
         // epic fail, handle error here
     });
 });
@@ -221,7 +221,7 @@ router.get('/player', function(req, res, next) {
         data = data.replaceAll('\n','').replaceAll('\t','');
         let $ = cheerio.load(data);
         let result = [];
-        let option = $("option");
+        let option = $('option');
 
         option.each(function (){
             let text = $(this).text();
@@ -235,7 +235,7 @@ router.get('/player', function(req, res, next) {
 
         res.send(result);
     }).catch(function(err) {
-        res.send({"error":err});
+        res.send({'error':err.message});
         // epic fail, handle error here
     });
 });

@@ -4,12 +4,16 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 
+const cookie = require('./js/cookie');
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 let getRouter = require('./routes/get');
+let postRouter = require('./routes/post');
 
 let app = express();
 const port = 3000;
+
+global.cookie = cookie;
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
@@ -28,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/get', getRouter);
+app.use('/post', postRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
