@@ -3,22 +3,12 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
-let http = require('http');
-const config = require('./js/config');
-const cookie = require('./js/cookie');
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 let getRouter = require('./routes/get');
 let postRouter = require('./routes/post');
 
 let app = express();
-const port = config.port;
-
-global.cookie = cookie;
-
-http.createServer(app).listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -5,14 +5,17 @@
  */
 
 let app = require('../app');
+let config = require('../js/config');
+let cookie = require('../js/cookie');
 let debug = require('debug')('mahjong-backend:server');
-let http = require('js/http_module');
+let http = require('http');
 
+global.cookie = cookie;
 /**
  * Get port from environment and store in Express.
  */
 
-let port = normalizePort(process.env.PORT || '3000');
+let port = normalizePort(process.env.PORT || config.port);
 app.set('port', port);
 
 /**
