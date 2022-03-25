@@ -3,6 +3,7 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
+let http = require('http');
 const config = require('./js/config');
 const cookie = require('./js/cookie');
 let indexRouter = require('./routes/index');
@@ -15,7 +16,7 @@ const port = config.port;
 
 global.cookie = cookie;
 
-app.listen(port, () => {
+http.createServer(app).listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
