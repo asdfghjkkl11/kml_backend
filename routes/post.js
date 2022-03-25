@@ -38,10 +38,9 @@ router.post('/record_ok', function(req, res, next) {
             id: id
         };
 
-        res.send(result);
+        res.send({'code':200, 'data':result});
     }).catch(function(err) {
-        res.send({'error':err.message});
-        // epic fail, handle error here
+        res.send({'code':500, 'error':err.message});
     });
 });
 
@@ -74,10 +73,9 @@ router.post('/record_modify_ok', function(req, res, next) {
             id: id
         };
 
-        res.send(result);
+        res.send({'code':200, 'data':result});
     }).catch(function(err) {
-        res.send({'error':err.message});
-        // epic fail, handle error here
+        res.send({'code':500, 'error':err.message});
     });
 });
 
@@ -98,10 +96,9 @@ router.post('/record_del', function(req, res, next) {
             }
         }
 
-        res.send(result);
+        res.send({'code':200, 'data':result});
     }).catch(function(err) {
-        res.send({'error':err.message});
-        // epic fail, handle error here
+        res.send({'code':500, 'error':err.message});
     });
 });
 
@@ -122,10 +119,9 @@ router.post('/record_res', function(req, res, next) {
             }
         }
 
-        res.send(result);
+        res.send({'code':200, 'data':result});
     }).catch(function(err) {
-        res.send({'error':err.message});
-        // epic fail, handle error here
+        res.send({'code':500, 'error':err.message});
     });
 });
 
@@ -148,10 +144,9 @@ router.post('/registid_ok', function(req, res, next) {
             }
         }
 
-        res.send(result);
+        res.send({'code':200, 'data':result});
     }).catch(function(err) {
-        res.send({'error':err.message});
-        // epic fail, handle error here
+        res.send({'code':500, 'error':err.message});
     });
 });
 

@@ -55,10 +55,9 @@ router.get('/ranking', function(req, res, next) {
             result[header_data[i]] = util.tableToJson(result_data[i]);
         }
 
-        res.send(result);
+        res.send({'code':200, 'data':result});
     }).catch(function(err) {
-        res.send({'error':err.message});
-        // epic fail, handle error here
+        res.send({'code':500, 'error':err.message});
     });
 });
 
@@ -94,10 +93,9 @@ router.get('/record_list', function(req, res, next) {
 
         let result = util.tableToJson(result_tr);
 
-        res.send(result);
+        res.send({'code':200, 'data':result});
     }).catch(function(err) {
-        res.send({'error':err.message});
-        // epic fail, handle error here
+        res.send({'code':500, 'error':err.message});
     });
 });
 
@@ -149,10 +147,9 @@ router.get('/record_per', function(req, res, next) {
             result[header_data[i]] = util.tableToJson(result_data[i]);
         }
 
-        res.send(result);
+        res.send({'code':200, 'data':result});
     }).catch(function(err) {
-        res.send({'error':err.message});
-        // epic fail, handle error here
+        res.send({'code':500, 'error':err.message});
     });
 });
 
@@ -205,10 +202,9 @@ router.get('/record_versus_res', function(req, res, next) {
             result[header_data[i]] = util.tableToJson(result_data[i]);
         }
 
-        res.send(result);
+        res.send({'code':200, 'data':result});
     }).catch(function(err) {
-        res.send({'error':err.message});
-        // epic fail, handle error here
+        res.send({'code':500, 'error':err.message});
     });
 });
 
@@ -233,10 +229,9 @@ router.get('/player', function(req, res, next) {
             });
         });
 
-        res.send(result);
+        res.send({'code':200, 'data':result});
     }).catch(function(err) {
-        res.send({'error':err.message});
-        // epic fail, handle error here
+        res.send({'code':500, 'error':err.message});
     });
 });
 
