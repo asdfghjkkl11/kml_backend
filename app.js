@@ -3,7 +3,7 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
-
+const config = require('./js/config');
 const cookie = require('./js/cookie');
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
@@ -11,7 +11,7 @@ let getRouter = require('./routes/get');
 let postRouter = require('./routes/post');
 
 let app = express();
-const port = 3000;
+const port = config.port;
 
 global.cookie = cookie;
 
