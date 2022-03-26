@@ -3,7 +3,12 @@
 
 # INSTALLATION
 
-
+```
+git clone https://github.com/asdfghjkkl11/kml_backend.git
+cd kml_backend
+npm install
+node start
+```
 
 # API
 
