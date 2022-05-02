@@ -30,7 +30,7 @@ router.get('/ranking', function(req, res, next) {
                 let div = $(this).find('td div');
 
                 div.each(function (){
-                    let text = $(this).text();
+                    let text = $(this).text().trim();
 
                     result_text.push(text);
                 });
@@ -45,7 +45,7 @@ router.get('/ranking', function(req, res, next) {
         let header = $('tr[bgcolor="#353f6d"] td strong');
 
         header.each(function (){
-            let text = $(this).text();
+            let text = $(this).text().trim();
             header_data.push(text);
         })
 
@@ -120,7 +120,7 @@ router.get('/record_per', function(req, res, next) {
                 let div = $(this).find('td');
 
                 div.each(function (){
-                    let text = $(this).text();
+                    let text = $(this).text().trim();
                     result_text.push(text);
                 });
 
@@ -174,7 +174,7 @@ router.get('/record_versus_res', function(req, res, next) {
                 let div = $(this).find('td');
 
                 div.each(function (){
-                    let text = $(this).text();
+                    let text = $(this).text().trim();
 
                     result_text.push(text);
                 });
@@ -220,7 +220,7 @@ router.get('/player', function(req, res, next) {
         let option = $('option');
 
         option.each(function (){
-            let text = $(this).text();
+            let text = $(this).text().trim();
             let id = $(this).val();
 
             result.push({
