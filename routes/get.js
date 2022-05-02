@@ -83,7 +83,7 @@ router.get('/record_list', function(req, res, next) {
             let td = $(this).find('td');
 
             td.each(function (){
-                let text = $(this).text();
+                let text = $(this).text().trim();
 
                 result_text.push(text);
             });
