@@ -26,8 +26,8 @@ let router = express.Router();
 // point[3]: 0
 // common_point: 0
 router.post('/record_ok', function(req, res, next) {
-    let url = config.url + '/record_ok.php';
     let body = util.getFormData(req.body);
+    let url = config.url + body.get("statID") + '/record_ok.php';
 
     http.postDataFromHttp(url,body).then(function(data) {
         data = data.replaceAll('\n','').replaceAll('\t','');
@@ -61,8 +61,8 @@ router.post('/record_ok', function(req, res, next) {
 // point[3]: 0
 // common_point: 0
 router.post('/record_modify_ok', function(req, res, next) {
-    let url = config.url + '/record_modify_ok.php';
     let body = util.getFormData(req.body);
+    let url = config.url + body.get("statID") + '/record_modify_ok.php';
 
     http.postDataFromHttp(url,body).then(function(data) {
         data = data.replaceAll('\n','').replaceAll('\t','');
@@ -82,7 +82,7 @@ router.post('/record_modify_ok', function(req, res, next) {
 //param = id
 router.post('/record_del', function(req, res, next) {
     let body = req.body;
-    let url = config.url + '/record_del.php?id=' + body.id;
+    let url = config.url + body.statID + '/record_del.php?id=' + body.id;
 
     http.getDataFromHttp(url).then(function(data) {
         data = data.replaceAll('\n','').replaceAll('\t','');
@@ -105,7 +105,7 @@ router.post('/record_del', function(req, res, next) {
 //param = id
 router.post('/record_res', function(req, res, next) {
     let body = req.body;
-    let url = config.url + '/record_res.php?id=' + body.id;
+    let url = config.url + body.statID + '/record_res.php?id=' + body.id;
 
     http.getDataFromHttp(url).then(function(data) {
         data = data.replaceAll('\n','').replaceAll('\t','');
@@ -128,8 +128,8 @@ router.post('/record_res', function(req, res, next) {
 //param
 // nick
 router.post('/registid_ok', function(req, res, next) {
-    let url = config.url + '/registid_ok.php';
     let body = req.body;
+    let url = config.url + body.statID + '/registid_ok.php';
     let data = 'nick=' + util.encodeKR(body.nick);
 
     http.postDataFromHttp(url,data).then(function(data) {
@@ -139,6 +139,33 @@ router.post('/registid_ok', function(req, res, next) {
         };
 
         if(data.indexOf(body.nick + ' 님이 등록 되셨습니다.') !== -1){
+            result = {
+                result: 'success'
+            }
+        }
+
+        res.send({'code':200, 'data':result});
+    }).catch(function(err) {
+        res.send({'code':500, 'error':err.message});
+    });
+});
+
+//param
+// statID
+// passwd
+router.post('/login', function(req, res, next) {
+    let body = req.body;
+    let url = config.url + body.statID + '/login.php';
+    console.log(url)
+    let data = 'passwd=' + util.encodeKR(body.passwd);
+
+    http.postDataFromHttp(url,data).then(function(data) {
+        data = data.replaceAll('\n','').replaceAll('\t','');
+        let result = {
+            result: 'fail'
+        };
+
+        if(data.indexOf('비밀번호가 틀렸습니다.') === -1){
             result = {
                 result: 'success'
             }

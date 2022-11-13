@@ -8,7 +8,8 @@ let router = express.Router();
 /* GET */
 //param = year,month,quarter
 router.get('/ranking', function(req, res, next) {
-    let url = config.url + '/ranking.php';
+    let body = req.body;
+    let url = config.url + body.statID + '/ranking.php';
     let query = req.url.split('?')[1];
 
     if(query !== undefined){
@@ -63,7 +64,8 @@ router.get('/ranking', function(req, res, next) {
 
 //param = year,month
 router.get('/record_list', function(req, res, next) {
-    let url = config.url + '/record_list.php';
+    let body = req.body;
+    let url = config.url + body.statID + '/record_list.php';
     let query = req.url.split('?')[1];
 
     if(query !== undefined){
@@ -101,7 +103,8 @@ router.get('/record_list', function(req, res, next) {
 
 //param id
 router.get('/record_per', function(req, res, next) {
-    let url = config.url + '/record_per.php';
+    let body = req.body;
+    let url = config.url + body.statID + '/record_per.php';
     let query = req.url.split('?')[1];
 
     http.postDataFromHttp(url,query).then(function(data) {
@@ -155,7 +158,8 @@ router.get('/record_per', function(req, res, next) {
 
 //param id0 id1
 router.get('/record_versus_res', function(req, res, next) {
-    let url = config.url + '/record_versus_res.php';
+    let body = req.body;
+    let url = config.url + body.statID + '/record_versus_res.php';
     let query = req.url.split('?')[1];
 
     http.postDataFromHttp(url,query).then(function(data) {
@@ -211,7 +215,8 @@ router.get('/record_versus_res', function(req, res, next) {
 
 //param = year,month,quarter
 router.get('/player', function(req, res, next) {
-    let url = config.url + '/record_per_list.php';
+    let body = req.body;
+    let url = config.url + body.statID + '/record_per_list.php';
 
     http.getDataFromHttp(url).then(function(data) {
         data = data.replaceAll('\n','').replaceAll('\t','');
