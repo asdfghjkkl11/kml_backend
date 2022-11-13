@@ -216,8 +216,7 @@ router.post('/record_versus_res', function(req, res, next) {
 router.post('/player', function(req, res, next) {
     let body = req.body;
     let url = config.url + body.statID + '/record_per_list.php';
-    console.log(body)
-    console.log(url)
+
     http.getDataFromHttp(url).then(function(data) {
         data = data.replaceAll('\n','').replaceAll('\t','');
         let $ = cheerio.load(data);

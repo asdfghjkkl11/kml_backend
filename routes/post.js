@@ -156,22 +156,24 @@ router.post('/registid_ok', function(req, res, next) {
 router.post('/login', function(req, res, next) {
     let body = req.body;
     let url = config.url + body.statID + '/login.php';
-    console.log(url)
     let data = 'passwd=' + util.encodeKR(body.passwd);
 
-    http.postDataFromHttp(url,data).then(function(data) {
-        data = data.replaceAll('\n','').replaceAll('\t','');
+    http.postDataFromHttp(url,data).then(async function (data) {
+        data = data.replaceAll('\n', '').replaceAll('\t', '');
         let result = {
-            result: 'fail'
+            result: -1
         };
+        if (data.indexOf('비밀번호가 틀렸습니다.') === -1) {
+            let titleData = await http.getDataFromHttp(config.url + body.statID + '/')
+            let $ = cheerio.load(titleData);
+            let title = $('title').text();
 
-        if(data.indexOf('비밀번호가 틀렸습니다.') === -1){
             result = {
-                result: 'success'
+                result: title
             }
         }
 
-        res.send({'code':200, 'data':result});
+        res.send({'code': 200, 'data': result});
     }).catch(function(err) {
         res.send({'code':500, 'error':err.message});
     });
