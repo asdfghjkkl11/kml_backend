@@ -113,7 +113,6 @@ router.post('/record_per', function(req, res, next) {
         let $ = cheerio.load(data);
         let result_data = [];
         let table = $('table[cellspacing="1"]');
-
         table.each(function (){
             let result_tr = [];
             let tr = $(this).find('tr');
@@ -134,10 +133,10 @@ router.post('/record_per', function(req, res, next) {
         });
 
         let temp_data = [];
-
-        for(let i = 0; i < result_data[6].length; i++){
+        let index = result_data.length -1;
+        for(let i = 0; i < result_data[index].length; i++){
             if(i%2 == 0){
-                temp_data.push(result_data[6][i]);
+                temp_data.push(result_data[index][i]);
             }
         }
 
@@ -217,7 +216,8 @@ router.post('/record_versus_res', function(req, res, next) {
 router.post('/player', function(req, res, next) {
     let body = req.body;
     let url = config.url + body.statID + '/record_per_list.php';
-
+    console.log(body)
+    console.log(url)
     http.getDataFromHttp(url).then(function(data) {
         data = data.replaceAll('\n','').replaceAll('\t','');
         let $ = cheerio.load(data);
